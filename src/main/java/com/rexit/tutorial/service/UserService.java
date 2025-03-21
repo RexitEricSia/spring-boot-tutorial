@@ -1,5 +1,7 @@
 package com.rexit.tutorial.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,6 +21,10 @@ public class UserService {
 
     public String sendMessage() {
         return "this is a testing message";
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE, rollbackFor = Exception.class)
