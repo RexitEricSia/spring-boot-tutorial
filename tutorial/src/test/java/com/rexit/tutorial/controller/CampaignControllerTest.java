@@ -96,6 +96,7 @@ class CampaignControllerTest {
     @Test
     void shouldUpdateCampaign() throws Exception {
         Campaign updatedCampaign = Campaign.builder()
+                .id(1L)
                 .campaignCode("CAMP123")
                 .name("Updated")
                 .description("A summer campaign with amazing discounts")

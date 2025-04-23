@@ -9,17 +9,17 @@
 <body>
     <div class="container">
         <h1 class="text-center">Campaign Details</h1>
-        <p><strong>Campaign Code:</strong> ${campaign.campaignCode}</p>
-        <p><strong>Campaign Name:</strong> ${campaign.name}</p>
-        <p><strong>Description:</strong> ${campaign.description}</p>
-        <p><strong>Organizer Email:</strong> ${campaign.organiserEmail}</p>
-        <p><strong>Age:</strong> ${campaign.age}</p>
-        <p><strong>Discount Percentage:</strong> ${campaign.discountPercentage}%</p>
-        <p><strong>Start Date:</strong> ${campaign.startDate}</p>
-        <p><strong>End Date:</strong> ${campaign.endDate}</p>
-        <p><strong>Hall Rental Price:</strong> ${campaign.hallRentalPrice}</p>
-        <p><strong>Created Date:</strong> ${campaign.createdDateTime}</p>
-        <p><strong>Last Update:</strong> ${campaign.lastUpdateDateTime}</p>
+        <p><strong>Campaign Code:</strong> <span th:text="${campaign.campaignCode}"></span></p>
+        <p><strong>Campaign Name:</strong> <span th:text="${campaign.name}"></span></p>
+        <p><strong>Description:</strong> <span th:text="${campaign.description}"></span></p>
+        <p><strong>Organizer Email:</strong> <span th:text="${campaign.organiserEmail}"></span></p>
+        <p><strong>Age:</strong> <span th:text="${campaign.age}"></span></p>
+        <p><strong>Discount Percentage:</strong> <span th:text="${campaign.discountPercentage}"></span>%</p>
+        <p><strong>Start Date:</strong> <span th:text="${campaign.startDate}"></span></p>
+        <p><strong>End Date:</strong> <span th:text="${campaign.endDate}"></span></p>
+        <p><strong>Hall Rental Price:</strong> <span th:text="${campaign.hallRentalPrice}"></span></p>
+        <p><strong>Created Date:</strong> <span th:text="${campaign.createdDateTime}"></span></p>
+        <p><strong>Last Update:</strong> <span th:text="${campaign.lastUpdateDateTime}"></span></p>
     </div>
 </body>
 </html>

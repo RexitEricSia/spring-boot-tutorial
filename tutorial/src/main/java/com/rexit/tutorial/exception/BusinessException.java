@@ -16,6 +16,6 @@ public class BusinessException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return String.format("Status Code: %s | Business Error: %s" , message, businessStatusCode);
+        return String.format("Status Code: %s | Business Error: %s" , businessStatusCode, message );
     }
 }

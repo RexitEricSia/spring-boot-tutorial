@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.rexit.tutorial.model.Campaign;
@@ -12,16 +14,16 @@ import com.rexit.tutorial.model.Campaign;
 @Service
 public class PdfService {
 
-    private final org.thymeleaf.TemplateEngine templateEngine;
+    private final TemplateEngine templateEngine;
     private final CampaignService campaignService;
 
-    public PdfService(org.thymeleaf.TemplateEngine templateEngine, CampaignService campaignService) {
+    public PdfService(TemplateEngine templateEngine, CampaignService campaignService) {
         this.templateEngine = templateEngine;
         this.campaignService = campaignService;
     }
 
     private String renderTemplate(String templateName, Map<String, Object> model) {
-        return templateEngine.process(templateName, new org.thymeleaf.context.Context(null, model));
+        return templateEngine.process(templateName, new Context(null, model));
     }
     
     public byte[] generateCampaignCatalogue(long campaignId) {

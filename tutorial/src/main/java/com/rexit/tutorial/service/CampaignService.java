@@ -34,6 +34,7 @@ public class CampaignService {
         try {
             campaign = campaignRepository.findById(id);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BusinessException(Error.CAMPAIGN_FETCH_BY_ID_ERROR);
         }
 

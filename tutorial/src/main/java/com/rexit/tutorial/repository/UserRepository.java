@@ -15,6 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.email LIKE %:email%")
     User findBySimilarEmail(@Param("email") String email);
 
-    @Query(value = "SELECT * FROM users WHERE age >= :age", nativeQuery = true)
+    @Query(value = "SELECT * FROM \"user\" WHERE age >= :age", nativeQuery = true)
     List<User> findByGreaterAge(@Param("age") int age);
 }
