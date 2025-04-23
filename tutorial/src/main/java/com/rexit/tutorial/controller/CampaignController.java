@@ -38,6 +38,9 @@ public class CampaignController {
         return ResponseEntity.ok(campaignService.getCampaignById(id));
     }
 
+    //@PostMapping(consumes = "application/x-www-form-urlencoded")
+    //@PostMapping(consumes = "text/plain")
+    //@PostMapping(consumes = "application/xml")
     @PostMapping
     public ResponseEntity<Campaign> createCampaign(@RequestBody @Valid Campaign newCampaign) {
         return ResponseEntity.ok(campaignService.createCampaign(newCampaign));
