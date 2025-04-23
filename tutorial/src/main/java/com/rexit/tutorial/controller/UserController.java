@@ -28,7 +28,7 @@ public class UserController {
     }
     
 
-    @PostMapping
+    @PostMapping("/rollback-demo")
     public void rollbackTesting(@RequestBody User newUser) {
         try {
             userService.rollbackTesting(newUser);
