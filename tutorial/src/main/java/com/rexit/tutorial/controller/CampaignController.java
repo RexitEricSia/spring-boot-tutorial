@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rexit.tutorial.model.Campaign;
 import com.rexit.tutorial.service.CampaignService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -37,12 +39,12 @@ public class CampaignController {
     }
 
     @PostMapping
-    public ResponseEntity<Campaign> createCampaign(@RequestBody Campaign newCampaign) {
+    public ResponseEntity<Campaign> createCampaign(@RequestBody @Valid Campaign newCampaign) {
         return ResponseEntity.ok(campaignService.createCampaign(newCampaign));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Campaign> updateCampaign(@PathVariable Long id, @RequestBody Campaign updatedCampaign) {
+    public ResponseEntity<Campaign> updateCampaign(@PathVariable Long id, @RequestBody @Valid Campaign updatedCampaign) {
         return ResponseEntity.ok(campaignService.updateCampaign(id, updatedCampaign));
     }
 

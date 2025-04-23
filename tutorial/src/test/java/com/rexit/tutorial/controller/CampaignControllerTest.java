@@ -45,8 +45,8 @@ class CampaignControllerTest {
                 .organiserEmail("organizer@example.com")
                 .age(20)
                 .discountPercentage(50)
-                .startDate(LocalDate.of(2025, 6, 1)) // Start date should be in the future
-                .endDate(LocalDate.of(2025, 8, 31)) // End date should be in the past
+                .startDate(LocalDate.of(2025, 6, 1))
+                .endDate(LocalDate.of(2025, 8, 31))
                 .hallRentalPrice(new BigDecimal("1500.00"))
                 .build();
 
@@ -57,8 +57,8 @@ class CampaignControllerTest {
                 .organiserEmail("deals@example.com")
                 .age(18)
                 .discountPercentage(70)
-                .startDate(LocalDate.of(2025, 11, 20)) // Start date should be in the future
-                .endDate(LocalDate.of(2025, 11, 27)) // End date should be in the past
+                .startDate(LocalDate.of(2025, 11, 20))
+                .endDate(LocalDate.of(2025, 11, 27))
                 .hallRentalPrice(new BigDecimal("2500.00"))
                 .build();
     }

@@ -69,10 +69,10 @@ public class Campaign {
     @Max(value = 100, message = "Campaign percentage cannot exceed 100")
     private int discountPercentage;
 
-    @Future(message = "Campaign start date must be in the future")
+    @FutureOrPresent(message = "Campaign start date must be in the future")
     private LocalDate startDate;
 
-    @Past(message = "Campaign end date must be in the past")
+    @Future(message = "Campaign end date must be in the past")
     private LocalDate endDate;
 
     // @PastOrPresent(message = "Campaign start date cannot be in the future")
