@@ -19,9 +19,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Give execute permission to mvnw
+        run: chmod +x tutorial/mvnw
+
       - name: Build WAR package
         working-directory: tutorial
-        run: ./tutorial/mvnw clean package
+        run: ./mvnw clean package
 
       - name: Build Docker image from WAR
         run: |
