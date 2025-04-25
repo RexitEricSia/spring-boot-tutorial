@@ -1,0 +1,38 @@
+name: Build & Upload Docker Image to OneDrive
+
+on:
+  push:
+    branches:
+      - uat
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build WAR package
+        working-directory: tutorial
+        run: ./mvnw clean package
+
+      - name: Build Docker image from WAR
+        run: |
+          docker build -t tutorial-app:uat ./tutorial
+
+      - name: Save Docker image to a file
+        run: |
+          docker save tutorial-app:uat -o tutorial-app-uat.tar
+
+      - name: Upload to OneDrive using Rclone
+        run: |
+          mkdir -p ~/.config/rclone
+          echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+          rclone copy tutorial-app-uat.tar onedrive:UAT-Docker/
