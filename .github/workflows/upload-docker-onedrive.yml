@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
+    environment: uat
 
     steps:
       - name: Checkout code
@@ -42,5 +43,5 @@ jobs:
         run: |
           mkdir -p ~/.config/rclone
           echo "${{ secrets.RCLONE_CONFIG }}" | base64 --decode > ~/.config/rclone/rclone.conf
-          rclone listremotes
+          rclone copy tutorial-app.tar onedrive:UAT-Docker/
 
