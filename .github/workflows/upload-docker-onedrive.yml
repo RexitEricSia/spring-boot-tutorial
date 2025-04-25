@@ -38,6 +38,10 @@ jobs:
         run: |
           curl https://rclone.org/install.sh | sudo bash
 
+      - name: Check Rclone Configuration
+        run: |
+          cat ~/.config/rclone/rclone.conf
+
       - name: Upload to OneDrive using Rclone
         run: |
           mkdir -p ~/.config/rclone
