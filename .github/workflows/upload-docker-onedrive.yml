@@ -38,12 +38,8 @@ jobs:
         run: |
           curl https://rclone.org/install.sh | sudo bash
 
-      - name: Check Rclone Configuration
-        run: |
-          cat ~/.config/rclone/rclone.conf
-
       - name: Upload to OneDrive using Rclone
         run: |
           mkdir -p ~/.config/rclone
-          echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+          echo "${{ secrets.RCLONE_CONFIG }}" | base64 --decode > ~/.config/rclone/rclone.conf
           rclone copy tutorial-app-uat.tar onedrive:UAT-Docker/
