@@ -24,8 +24,8 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.PastOrPresent;
+//import jakarta.validation.constraints.Past;
+//import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -72,7 +72,7 @@ public class Campaign {
     @FutureOrPresent(message = "Campaign start date must be in the future")
     private LocalDate startDate;
 
-    @Future(message = "Campaign end date must be in the past")
+    @Future(message = "Campaign end date must be in the future")
     private LocalDate endDate;
 
     // @PastOrPresent(message = "Campaign start date cannot be in the future")
