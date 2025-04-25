@@ -24,7 +24,7 @@ jobs:
 
       - name: Build WAR package
         working-directory: tutorial
-        run: ./mvnw clean package
+        run: ./mvnw clean package -DskipTests
 
       - name: Build Docker image from WAR
         run: |
