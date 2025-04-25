@@ -13,9 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Grant execute permission to mvnw
-        run: chmod +x ./mvnw
-
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -24,7 +21,7 @@ jobs:
 
       - name: Build WAR package
         working-directory: tutorial
-        run: ./mvnw clean package
+        run: ./tutorial/mvnw clean package
 
       - name: Build Docker image from WAR
         run: |
