@@ -42,4 +42,5 @@ jobs:
         run: |
           mkdir -p ~/.config/rclone
           echo "${{ secrets.RCLONE_CONFIG }}" | base64 --decode > ~/.config/rclone/rclone.conf
-          rclone copy tutorial-app-uat.tar onedrive:UAT-Docker/
+          rclone listremotes
+
