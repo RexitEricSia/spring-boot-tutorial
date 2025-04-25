@@ -34,6 +34,10 @@ jobs:
         run: |
           docker save tutorial-app:uat -o tutorial-app-uat.tar
 
+      - name: Install Rclone
+        run: |
+          curl https://rclone.org/install.sh | sudo bash
+
       - name: Upload to OneDrive using Rclone
         run: |
           mkdir -p ~/.config/rclone
