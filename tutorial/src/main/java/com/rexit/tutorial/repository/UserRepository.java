@@ -1,12 +1,16 @@
 package com.rexit.tutorial.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.rexit.tutorial.model.User;
+
+import jakarta.persistence.LockModeType;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -17,4 +21,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT * FROM \"user\" WHERE age >= :age", nativeQuery = true)
     List<User> findByGreaterAge(@Param("age") int age);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT u FROM User u WHERE u.username = :username")
+    Optional<User> findByUsernameWithLock(@Param("username") String username);
 }

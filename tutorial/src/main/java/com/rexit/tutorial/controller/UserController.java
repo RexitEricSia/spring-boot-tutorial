@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rexit.tutorial.model.User;
 import com.rexit.tutorial.service.UserService;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -17,9 +20,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    // This endpoint is just for demo purpose, so the encrypted password can be store to the DB    
+    @GetMapping("/get-pw")
+    public void getPw() {
+        List<String> usernames = Arrays.asList(
+            "johndoe", "janesmith", "emilyjones", "michaelbrown", 
+            "chrisdavis", "lisawilson", "danielmiller", "sarahmoore", 
+            "davidtaylor", "lauraanderson"
+        );
+
+        for (String username : usernames) {
+            System.out.println(passwordEncoder.encode(username));
+        }
     }
 
     @PostMapping("/getAll")
@@ -27,7 +46,6 @@ public class UserController {
         return userService.getAllUsers();
     }
     
-
     @PostMapping("/rollback-demo")
     public void rollbackTesting(@RequestBody User newUser) {
         try {
@@ -36,6 +54,4 @@ public class UserController {
             e.printStackTrace();
         }
     }
-    
-    
 }

@@ -7,15 +7,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import com.rexit.tutorial.exception.BusinessException;
+
 @Aspect
 @Component
-@Profile({"dev", "uat"})
+@Profile({ "dev", "uat" })
 public class CampaignLoggingAspect {
-    
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Pointcut("execution(* com.rexit.tutorial.controller.CampaignController.*(..)) || execution(* com.rexit.tutorial.service.CampaignService.*(..))")
-    public void controllerAndServiceMethods() {}
+    public void controllerAndServiceMethods() {
+    }
 
     @Before("controllerAndServiceMethods()")
     public void logBefore(JoinPoint joinPoint) {
@@ -29,6 +32,12 @@ public class CampaignLoggingAspect {
 
     @AfterThrowing(pointcut = "controllerAndServiceMethods()", throwing = "error")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable error) {
-        logger.error("Exception in: {} with message: {}", joinPoint.getSignature(), error.getMessage());
+        if (error instanceof BusinessException) {
+            BusinessException businessError = (BusinessException) error;
+            logger.error("Exception in: {} with message: {}", joinPoint.getSignature(),
+                    businessError.getFormattedMessage());
+        } else {
+            logger.error("Exception in: {} with message: {}", joinPoint.getSignature(), error.getMessage());
+        }
     }
 }

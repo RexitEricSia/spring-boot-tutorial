@@ -17,7 +17,9 @@ public enum Error {
     CAMPAIGN_ID_NOT_FOUND_FOR_UPDATE("CAMPAIGN_ID_NOT_FOUND_FOR_UPDATE", "Campaign ID not found for update"),
     CAMPAIGN_UPDATE_ERROR("CAMPAIGN_UPDATE_ERROR", "Error updating campaign"),
     CAMPAIGN_ID_NOT_FOUND_FOR_DELETE("CAMPAIGN_ID_NOT_FOUND_FOR_DELETE", "Campaign ID not found for delete"),
-    CAMPAIGN_DELETE_ERROR("CAMPAIGN_DELETE_ERROR", "Error deleting campaign");
+    CAMPAIGN_DELETE_ERROR("CAMPAIGN_DELETE_ERROR", "Error deleting campaign"),
+    CAMPAIGN_OPTIMISTIC_LOCK("CAMPAIGN_OPTIMISTIC_LOCK", "Campaign has been modified by another user. Please try again."),
+    CAMPAIGN_LOCK_TIMEOUT("CAMPAIGN_LOCK_TIMEOUT", "Campaign is being modified by another user. Please try again later.");
 
     private final String code;
     private final String message;

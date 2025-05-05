@@ -1,7 +1,12 @@
 package com.rexit.tutorial.model;
 
+import com.rexit.tutorial.enums.UserRole;
+
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,10 +27,17 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
+    @NonNull
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @NonNull
+    private UserRole role;
+
+    @NonNull
     private int age;
 
-    @Column(nullable = false)
+    @NonNull
     private String email;
 
 }

@@ -16,6 +16,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Future;
@@ -85,13 +86,8 @@ public class Campaign {
     @Digits(integer = 5, fraction = 2, message = "Price must be a valid number with up to 2 decimal places")
     private BigDecimal hallRentalPrice;
 
-    // Lombok will automatically generate the following:
-    // - Getters for all fields
-    // - Setters for all fields
-    // - `toString()`, `equals()`, `hashCode()` methods based on the fields
-    // - No-argument constructor
-    // - All-argument constructor
-    // - A builder pattern for easy object creation
+    @Version
+    private Long version;
 
     private LocalDateTime createdDateTime;
     private LocalDateTime lastUpdateDateTime;
