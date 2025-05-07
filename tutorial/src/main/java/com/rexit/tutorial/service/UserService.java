@@ -8,9 +8,13 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.rexit.tutorial.enums.Error;
 import com.rexit.tutorial.exception.BusinessException;
 import com.rexit.tutorial.model.User;
 import com.rexit.tutorial.repository.UserRepository;
+
+import jakarta.persistence.LockTimeoutException;
+import jakarta.persistence.QueryTimeoutException;
 
 @Service
 public class UserService {
@@ -33,18 +37,18 @@ public class UserService {
 
     @Transactional
     public User getUserByUsernameWithLock(String username) {
-        Optional<User> optionalUser = null;
+        Optional<User> optionalUser;
 
         try {
             optionalUser = userRepository.findByUsernameWithLock(username);
+        } catch (QueryTimeoutException | LockTimeoutException e) {
+            throw new BusinessException(Error.USER_LOCK_TIMEOUT);
         } catch (Exception e) {
-            // database connection error
-            throw new BusinessException(null);
+            throw new BusinessException(Error.USER_FETCH_BY_ID_ERROR);
         }
 
         if (!optionalUser.isPresent()) {
-            // not found login failed
-            throw new BusinessException(null);
+            throw new BusinessException(Error.USER_ID_NOT_FOUND);
         }
 
         return optionalUser.get();

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.rexit.tutorial.dto.LoginRequestDTO;
 import com.rexit.tutorial.dto.LoginResponseDTO;
+import com.rexit.tutorial.enums.Error;
 import com.rexit.tutorial.exception.BusinessException;
 import com.rexit.tutorial.model.User;
 import com.rexit.tutorial.util.JwtUtil;
@@ -26,9 +27,16 @@ public class AuthenticationService {
     }
 
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
-        User user = userService.getUserByUsernameWithLock(loginRequestDTO.getUsername());
-        if(!passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
-            throw new BusinessException(null);
+
+        User user;
+        try {
+            user = userService.getUserByUsernameWithLock(loginRequestDTO.getUsername());
+        } catch (BusinessException e) {
+            throw new BusinessException(Error.AUTHENTICATION_LOGIN_FAILED);
+        }
+
+        if (!passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
+            throw new BusinessException(Error.AUTHENTICATION_LOGIN_FAILED);
         }
 
         Map<String, Object> claims = new HashMap<>();
@@ -38,13 +46,15 @@ public class AuthenticationService {
     }
 
     // public LoginResponseDTO refreshToken(LoginRequestDTO loginRequestDTO) {
-    //     User user = userService.getUserByUsernameWithLock(loginRequestDTO.getUsername());
-    //     if(!passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
-    //         throw new BusinessException(null);
-    //     }
+    // User user =
+    // userService.getUserByUsernameWithLock(loginRequestDTO.getUsername());
+    // if(!passwordEncoder.matches(loginRequestDTO.getPassword(),
+    // user.getPassword())) {
+    // throw new BusinessException(null);
+    // }
 
-    //     //generate tokens
+    // //generate tokens
 
-    //     return new LoginResponseDTO();
+    // return new LoginResponseDTO();
     // }
 }

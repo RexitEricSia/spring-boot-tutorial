@@ -12,11 +12,11 @@ import com.rexit.tutorial.exception.BusinessException;
 @Aspect
 @Component
 @Profile({ "dev", "uat" })
-public class CampaignLoggingAspect {
+public class LoggingAspect {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("execution(* com.rexit.tutorial.controller.CampaignController.*(..)) || execution(* com.rexit.tutorial.service.CampaignService.*(..))")
+    @Pointcut("execution(* com.rexit.tutorial.controller.*(..)) || execution(* com.rexit.tutorial.service.*(..))")
     public void controllerAndServiceMethods() {
     }
 

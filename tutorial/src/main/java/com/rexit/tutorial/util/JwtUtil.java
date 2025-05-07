@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.rexit.tutorial.dto.LoginResponseDTO;
 
@@ -13,6 +15,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class JwtUtil {
@@ -23,9 +26,20 @@ public class JwtUtil {
     private final long accessTokenExpirationMs = 1000 * 60 * 15; // 15 mins
     private final long refreshTokenExpirationMs = 1000 * 60 * 60 * 24 * 7; // 7 days
 
+    private HttpServletRequest getCurrentHttpRequest() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return (attributes != null) ? attributes.getRequest() : null;
+    }
+
     public LoginResponseDTO generateToken(String username, Map<String, Object> extraClaims) {
         String accessToken = generateToken(username, extraClaims, accessTokenExpirationMs);
         String refreshToken = generateToken(username, Map.of(), refreshTokenExpirationMs);
+
+        HttpServletRequest request = getCurrentHttpRequest();
+        String ipAddress = (request != null) ? request.getRemoteAddr() : "UNKNOWN";
+        String userAgent = (request != null) ? request.getHeader("User-Agent") : "UNKNOWN";
+
+        System.out.println(ipAddress + " & " +  userAgent);
 
         return LoginResponseDTO.builder()
                 .accessToken(accessToken)
