@@ -1,5 +1,8 @@
 package com.rexit.tutorial.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rexit.tutorial.dto.LoginRequestDTO;
 import com.rexit.tutorial.dto.LoginResponseDTO;
+import com.rexit.tutorial.dto.LogoutRequestDTO;
 import com.rexit.tutorial.dto.RefreshRequestDTO;
 import com.rexit.tutorial.service.AuthenticationService;
 
@@ -22,12 +26,22 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
-        return ResponseEntity.ok(authenticationService.login(loginRequestDTO));
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO req) {
+        return ResponseEntity.ok(authenticationService.login(req));
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<LoginResponseDTO> refresh(@RequestBody RefreshRequestDTO refreshRequestDTO) {
-        return ResponseEntity.ok(authenticationService.refresh(refreshRequestDTO));
+    public ResponseEntity<LoginResponseDTO> refresh(@RequestBody RefreshRequestDTO req) {
+        return ResponseEntity.ok(authenticationService.refresh(req));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, String>> logout(@RequestBody LogoutRequestDTO req) {
+        authenticationService.logout(req);
+
+        Map<String, String> res = new HashMap<>();
+        res.put("message", "Logout successful");
+
+        return ResponseEntity.ok(res);
     }
 }

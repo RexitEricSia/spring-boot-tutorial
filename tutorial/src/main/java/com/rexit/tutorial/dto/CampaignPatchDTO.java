@@ -9,22 +9,15 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class CampaignPatchDTO {
 
-    @NotNull(message = "Campaign name is required")
-    @NotEmpty(message = "Campaign name cannot be empty")
     @Size(min = 3, max = 100, message = "Campaign name must be between 3 and 100 characters")
     private String name;
 
-    @NotNull(message = "Campaign description is required")
-    @NotBlank(message = "Campaign description cannot be blank or space only")
     @Size(min = 10, max = 500, message = "Campaign description must be between 10 and 500 characters")
     private String description;
 

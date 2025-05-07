@@ -10,6 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.rexit.tutorial.dto.LoginRequestDTO;
 import com.rexit.tutorial.dto.LoginResponseDTO;
+import com.rexit.tutorial.dto.LogoutRequestDTO;
 import com.rexit.tutorial.dto.RefreshRequestDTO;
 import com.rexit.tutorial.dto.UserPatchDTO;
 import com.rexit.tutorial.enums.Error;
@@ -103,7 +104,10 @@ public class AuthenticationService {
         String ipAddress = (request != null) ? request.getRemoteAddr() : "UNKNOWN";
         String userAgent = (request != null) ? request.getHeader("User-Agent") : "UNKNOWN";
 
-        if (!passwordEncoder.matches(refreshToken, user.getRefreshToken()) ||
+        if (user.getRefreshToken() == null ||
+                user.getIpAddress() == null ||
+                user.getUserAgent() == null ||
+                !passwordEncoder.matches(refreshToken, user.getRefreshToken()) ||
                 !passwordEncoder.matches(ipAddress, user.getIpAddress()) ||
                 !passwordEncoder.matches(userAgent, user.getUserAgent())) {
             throw new BusinessException(Error.AUTHENTICATION_REFRESH_FAILED);
@@ -112,5 +116,35 @@ public class AuthenticationService {
         LoginResponseDTO response = generateToken(user);
 
         return response;
+    }
+
+    public void logout(LogoutRequestDTO req) {
+        String refreshToken = req.getRefreshToken();
+        Long userId;
+        User user;
+
+        try {
+            userId = Long.parseLong(jwtUtil.extractUserID(refreshToken));
+        } catch (JwtException e) {
+            throw new BusinessException(Error.AUTHENTICATION_INVALID_TOKEN);
+        }
+
+        try {
+            user = userService.getUserByIDWithLock(userId);
+        } catch (BusinessException e) {
+            throw new BusinessException(Error.AUTHENTICATION_LOGOUT_FAILED);
+        }
+
+        if (!passwordEncoder.matches(refreshToken, user.getRefreshToken())) {
+            throw new BusinessException(Error.AUTHENTICATION_INVALID_TOKEN);
+        }
+
+        UserPatchDTO userPatchDTO = UserPatchDTO.builder()
+                .refreshToken(null)
+                .ipAddress(null)
+                .userAgent(null)
+                .build();
+
+        userService.updateUser(user.getId(), userPatchDTO);
     }
 }

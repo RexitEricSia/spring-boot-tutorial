@@ -56,8 +56,8 @@ public class SecurityConfig {
                 .addFilterBefore(roleFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/campaign/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/campaign/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/campaign/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/campaign/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/campaign/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/campaign/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/campaign/**").hasRole("ADMIN")

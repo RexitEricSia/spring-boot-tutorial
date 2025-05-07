@@ -45,8 +45,8 @@ public class RoleFilter extends OncePerRequestFilter {
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"message\": \"" + Error.AUTHENTICATION_MISSING.getMessage()  +"\"}");
+            response.setContentType("text/plain");
+            response.getWriter().write(Error.AUTHENTICATION_MISSING.getMessage());
             return;
         }
 
