@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rexit.tutorial.model.User;
 import com.rexit.tutorial.service.UserService;
 
+import jakarta.validation.Valid;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,9 +47,9 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
-    
+
     @PostMapping("/rollback-demo")
-    public void rollbackTesting(@RequestBody User newUser) {
+    public void rollbackTesting(@RequestBody @Valid User newUser) {
         try {
             userService.rollbackTesting(newUser);
         } catch (Exception e) {

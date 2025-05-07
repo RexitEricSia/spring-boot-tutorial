@@ -22,12 +22,18 @@ public enum Error {
     CAMPAIGN_LOCK_TIMEOUT("CAMPAIGN_LOCK_TIMEOUT", "Campaign is being modified by another user. Please try again later."),
 
     //User
+    USER_FETCH_BY_USERNAME_ERROR("USER_FETCH_BY_USERNAME_ERROR", "Error fetching user by Username"),
     USER_FETCH_BY_ID_ERROR("USER_FETCH_BY_ID_ERROR", "Error fetching user by ID"),
     USER_ID_NOT_FOUND("USER_ID_NOT_FOUND", "USER ID not found"),
     USER_LOCK_TIMEOUT("USER_LOCK_TIMEOUT", "User is being modified by another user. Please try again later."),
 
     //Authentication
-    AUTHENTICATION_LOGIN_FAILED("AUTHENTICATION_LOGIN_FAILED", "User ID or Password Incorrect.");
+    AUTHENTICATION_LOGIN_FAILED("AUTHENTICATION_LOGIN_FAILED", "User ID or Password Incorrect."),
+    AUTHENTICATION_REFRESH_FAILED("AUTHENTICATION_REFRESH_FAILED", "Failed to refresh access token."),
+    AUTHENTICATION_TOKEN_EXPIRED("AUTHENTICATION_TOKEN_EXPIRED", "Refresh token expired."),
+    AUTHENTICATION_INVALID_SIGNATURE("AUTHENTICATION_INVALID_SIGNATURE", "Invalid refresh token signature."),
+    AUTHENTICATION_INVALID_TOKEN("AUTHENTICATION_INVALID_TOKEN", "Invalid refresh token."),
+    AUTHENTICATION_MISSING("AUTHENTICATION_MISSING","Missing or invalid Authorization header.");
 
     private final String code;
     private final String message;

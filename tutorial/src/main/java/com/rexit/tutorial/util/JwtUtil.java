@@ -6,16 +6,11 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
 import com.rexit.tutorial.dto.LoginResponseDTO;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class JwtUtil {
@@ -26,20 +21,9 @@ public class JwtUtil {
     private final long accessTokenExpirationMs = 1000 * 60 * 15; // 15 mins
     private final long refreshTokenExpirationMs = 1000 * 60 * 60 * 24 * 7; // 7 days
 
-    private HttpServletRequest getCurrentHttpRequest() {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        return (attributes != null) ? attributes.getRequest() : null;
-    }
-
-    public LoginResponseDTO generateToken(String username, Map<String, Object> extraClaims) {
+    public LoginResponseDTO generateToken(Long username, Map<String, Object> extraClaims) {
         String accessToken = generateToken(username, extraClaims, accessTokenExpirationMs);
         String refreshToken = generateToken(username, Map.of(), refreshTokenExpirationMs);
-
-        HttpServletRequest request = getCurrentHttpRequest();
-        String ipAddress = (request != null) ? request.getRemoteAddr() : "UNKNOWN";
-        String userAgent = (request != null) ? request.getHeader("User-Agent") : "UNKNOWN";
-
-        System.out.println(ipAddress + " & " +  userAgent);
 
         return LoginResponseDTO.builder()
                 .accessToken(accessToken)
@@ -47,18 +31,22 @@ public class JwtUtil {
                 .build();
     }
 
-    private String generateToken(String subject, Map<String, Object> extraClaims, long expirationMs) {
+    private String generateToken(Long subject, Map<String, Object> extraClaims, long expirationMs) {
         return Jwts.builder()
                 .setClaims(extraClaims)
-                .setSubject(subject)
+                .setSubject(subject.toString())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
                 .signWith(key)
                 .compact();
     }
 
-    public String extractUsername(String token) {
+    public String extractUserID(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    public String extractRole(String token) {
+        return extractClaim(token, claims -> claims.get("role", String.class));
     }
 
     public Date extractExpiration(String token) {
@@ -79,7 +67,7 @@ public class JwtUtil {
     }
 
     public boolean isTokenValid(String token, String username) {
-        final String extractedUsername = extractUsername(token);
+        final String extractedUsername = extractUserID(token);
         return extractedUsername.equals(username) && !isTokenExpired(token);
     }
 

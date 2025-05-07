@@ -2,7 +2,6 @@ package com.rexit.tutorial.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -21,6 +20,7 @@ import jakarta.persistence.QueryTimeoutException;
 
 @Service
 public class CampaignService {
+
     private final CampaignRepository campaignRepository;
 
     public CampaignService(CampaignRepository campaignRepository) {
@@ -106,7 +106,8 @@ public class CampaignService {
     // savepoints support).
     // - SUPPORTS Joins existing transaction if available; otherwise, runs
     // non-transactionally.
-    // - NOT_SUPPORTED Suspends any existing transaction and runs non-transactionally.
+    // - NOT_SUPPORTED Suspends any existing transaction and runs
+    // non-transactionally.
     // - NEVER Throws an exception if a transaction exists.
     // - MANDATORY Must run within an existing transaction; throws an exception if
     // none exists.
@@ -114,7 +115,8 @@ public class CampaignService {
     // isolation
     // - DEFAULT (default) Uses the database’s default isolation level.
     // - READ_UNCOMMITTED Allows dirty reads (least restrictive).
-    // - READ_COMMITTED Prevents dirty reads; allows non-repeatable reads and phantom
+    // - READ_COMMITTED Prevents dirty reads; allows non-repeatable reads and
+    // phantom
     // reads.
     // - REPEATABLE_READ Prevents dirty and non-repeatable reads; allows phantom
     // reads.
@@ -142,30 +144,22 @@ public class CampaignService {
         Campaign campaign = optionalCampaign.get();
 
         try {
-            if (dto.getName() != null) {
+            if (dto.getName() != null)
                 campaign.setName(dto.getName());
-            }
-            if (dto.getDescription() != null) {
+            if (dto.getDescription() != null)
                 campaign.setDescription(dto.getDescription());
-            }
-            if (dto.getOrganiserEmail() != null) {
+            if (dto.getOrganiserEmail() != null)
                 campaign.setOrganiserEmail(dto.getOrganiserEmail());
-            }
-            if (dto.getAge() != null) {
+            if (dto.getAge() != 0)
                 campaign.setAge(dto.getAge());
-            }
-            if (dto.getDiscountPercentage() != null) {
+            if (dto.getDiscountPercentage() != 0)
                 campaign.setDiscountPercentage(dto.getDiscountPercentage());
-            }
-            if (dto.getStartDate() != null) {
+            if (dto.getStartDate() != null)
                 campaign.setStartDate(dto.getStartDate());
-            }
-            if (dto.getEndDate() != null) {
+            if (dto.getEndDate() != null)
                 campaign.setEndDate(dto.getEndDate());
-            }
-            if (dto.getHallRentalPrice() != null) {
+            if (dto.getHallRentalPrice() != null)
                 campaign.setHallRentalPrice(dto.getHallRentalPrice());
-            }
 
             return campaignRepository.save(campaign);
 

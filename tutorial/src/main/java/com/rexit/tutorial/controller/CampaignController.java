@@ -60,7 +60,7 @@ public class CampaignController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Campaign> patchCampaign(@PathVariable Long id, @RequestBody CampaignPatchDTO dto) {
+    public ResponseEntity<Campaign> patchCampaign(@PathVariable Long id, @RequestBody @Valid CampaignPatchDTO dto) {
         return ResponseEntity.ok(campaignService.patchCampaign(id, dto));
     }
 }
