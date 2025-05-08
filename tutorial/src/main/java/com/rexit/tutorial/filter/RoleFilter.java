@@ -3,6 +3,7 @@ package com.rexit.tutorial.filter;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +23,7 @@ import lombok.NonNull;
 
 @Component
 @WebFilter(urlPatterns = "/*") // Apply to all URLs or define specific ones
+@Profile("dev|prod|uat")
 public class RoleFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
