@@ -83,7 +83,7 @@ public class CampaignService {
             throw new BusinessException(Error.CAMPAIGN_UPDATE_ERROR);
         }
     }
-
+    // dev version
     public boolean deleteCampaign(Long id) {
 
         if (!campaignRepository.existsById(id)) {
