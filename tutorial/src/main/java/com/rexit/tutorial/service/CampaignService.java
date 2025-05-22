@@ -86,7 +86,7 @@ public class CampaignService {
 
     public boolean deleteCampaign(Long id) {
 
-        System.out.println("Feature T001: Checking Business logic A before deletion");
+        System.out.println("Feature T001: Checking Business logic A before deletion.");
 
         if (!campaignRepository.existsById(id)) {
             throw new BusinessException(Error.CAMPAIGN_ID_NOT_FOUND_FOR_DELETE);
