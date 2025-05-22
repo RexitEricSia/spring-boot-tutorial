@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 public class MessageService {
 
     public String sendMessage(String userName) {
-        return "Hello, " + userName + ". Welcome to Spring Boot.";
+        return "Hi, " + userName + ". Welcome to Spring Boot.";
     }
 }
